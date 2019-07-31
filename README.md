@@ -13,7 +13,7 @@ For this assignment, we created 3 interfaces:
 * Command
 
 to represent the
-the main methods that are used to set up the model. **AnimationModelImpl** implements **AnimationModel**
+the main methods that are used to set up the model. `AnimationModelImpl` implements `AnimationModel`
 to write the methods that are in the interface.There are two abstract classes for shape
 interface and command interface. We decided to have those abstract classes because there can be
 different shapes and commands that are being used in this model while they share some common field
@@ -44,7 +44,7 @@ since the built-in java classes take in integer and their getters return integer
 instead of double, which later on will cause some rounding error. Tree comparator class is used for
 the TreeMap in the shape class.
 
-Our **AnimationModelImpl** takes in a list of shapes and a list of commands. Commands are independent
+Our `AnimationModelImpl` takes in a list of shapes and a list of commands. Commands are independent
 from shapes because a shape can exist without a command, but a command cannot without a shape. Our
 Impl class implements methods from the interface such as get state which prints out the state as
 well as editing features such as add shape, remove shape, add command, and remove command, from
@@ -64,7 +64,7 @@ each interval.
 The shape model consists name, current position, size, color, shape type, appearing time,
 disappearing time as well as history. The name field and shape type ensures the uniqueness of each
 shape. Position, size, and color can be modified depends on which time it is at right now. The
-method **follow()** in command class provides the modification. More importantly, the history is
+method `follow()` in command class provides the modification. More importantly, the history is
 represented with a treeMap, a sorted map that sorts the interval. Therefore, when we print out the
 state, we can simply print out the arrays in order of the keys and they will be sored.It consists an
 array that corresponds a certain interval representing the modified position, size, and color.
@@ -117,7 +117,7 @@ and sizes. Instead, IReadOnlyShapes will prevent the mutation since it only has 
 methods.
 
 ### TextView
-The method **.render(IReadOnlyShapes shapes)** will take in a list of IReadOnlyShapes and appends the output to the
+The method `.render(IReadOnlyShapes shapes)` will take in a list of IReadOnlyShapes and appends the output to the
 StringBuilder to show the desired output. The reason we used StringBuilder because it has better
 performance than using String. Similar to the method getState in the AnimationModel, we used similar
 code to append the output to the StringBuilder. And obviously, since tempo doesn't affect this, it
@@ -132,15 +132,15 @@ mutated. Helper methods in the Shapes class take in speed as a parameter because
 duration time change according to how fast the user wants the animation to be.
 
 ### VisualView
-We used another interface **IDrawing** with the draw method to draw the shapes according
+We used another interface `IDrawing` with the draw method to draw the shapes according
 what it looks like. Therefore, in our VisualView class, it also takes in the Drawing class as a
 field because it extends JPanel that we can use to setBackground and size etc. In the visual class,
 we initialize the panel size and other conditions in the constructor. And for the render method, we
-just needed to call the draw method from **IDrawing** to draw all the shapes instead of doing all the
+just needed to call the draw method from `IDrawing` to draw all the shapes instead of doing all the
 drawing things under that method. Additionally, the tempo will have an effect for the visual
 animation, so it also takes the tempo as a field.
 
-Before doing the main method, we also have a **FactoryView** to switch which view to use in the main
+Before doing the main method, we also have a `FactoryView` to switch which view to use in the main
 methods instead of switching there. For our main method, we initialized in, out, view, and speed
 to default. Whenever there are some other directions in the command line, we will change the default
 values accordingly. Instead of output the error message, we used the JOptionPane to create a window
@@ -157,9 +157,9 @@ to the original in the **TextView** as well.
 
 ## Editor Design:
 
-For the EditorView, using delegation, we implemented the class to **IView** instead of extending the
+For the EditorView, using delegation, we implemented the class to `IView` instead of extending the
 visual view class. Therefore, in our editor view, we took in a visual view as a delegate. We used
-delegation to override the following methods from **IView**.
+delegation to override the following methods from `IView`.
 ```java
 void render(List<IReadOnlyShapes>);
 void setCanvas(Screen);
@@ -167,7 +167,7 @@ void getText();
 void getTempo();
 ```
 
-The panel of the **EditorView** includes actual animation panel, control menu bar for applications
+The panel of the `EditorView` includes actual animation panel, control menu bar for applications
 including restart, start, pause, and resume, east panel to add or remove shapes, or add or remove
 motions, and bottom panel to adjust speed and select if loop. Each panel has its own job so that
 the user knows exactly what to change and where to do those changes.
@@ -181,7 +181,7 @@ same as the motion list when adding, removing, or editing a motion.
 More importantly, since we are using key frames, we changed our model a little bit. In animation
 model, when using builder pattern, we also added key frames to the shapes when adding a motion to
 the shapes. Therefore, in our shape class, we have another field for storing key frames. This field
-is a **Hashmap** that maps current tick to an array of doubles that indicate the current state. With
+is a `Hashmap` that maps current tick to an array of doubles that indicate the current state. With
 tweening, instead of using intervals to tween, we used keyframes to tween each tick with
 corresponding shape state. Thus, when playing the animation, the animation is produced using the
 keyframes. We basically combined two keyframes to make it an interval. It's very similar to
@@ -189,7 +189,7 @@ interval tweening, but keyframes make it easier for add, remove, and edit keyfra
 EditorView.
 
 ## Run Configuration
-In order to run the program, the user can download the **Animator.jar** from the folder **resources** as well as all the text files from the folder **demos**. Then, put all the files in a new folder, type out the configuration in the command-prompt/terminal. In the run configuration, the user can also specify command-line arguments, such as the file you want to read in, the location you want the output to be printed, the view name you want to use, and the speed of the animation. The options for the view name are "text," "visual," "edit," and "svg". For example,
+In order to run the program, the user can download the `Animator.jar` from the folder **resources** as well as all the text files from the folder `demos`. Then, put all the files in a new folder, type out the configuration in the command-prompt/terminal. In the run configuration, the user can also specify command-line arguments, such as the file you want to read in, the location you want the output to be printed, the view name you want to use, and the speed of the animation. The options for the view name are "text," "visual," "edit," and "svg". For example,
 ```
 java -jar Animator.jar -in smalldemo.txt -speed 50 -view visual -out out.txt
 ```
